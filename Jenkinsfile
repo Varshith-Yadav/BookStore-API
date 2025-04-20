@@ -3,7 +3,7 @@ pipeline{
     agent any 
 
     environment{
-        DOCKER_IMAGE = 'varshithyadav/bookStore-api:latest'
+        DOCKER_IMAGE = 'varshithyadav/bookstore-api:latest'
         // DOCKER_REGISTRY = 'varshithyadav'
     }
 
