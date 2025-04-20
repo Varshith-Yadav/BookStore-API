@@ -1,12 +1,11 @@
 pipeline{
-
     agent any 
-
     environment{
         DOCKER_IMAGE = 'varshithyadav/bookstore-api:latest'
-        // DOCKER_REGISTRY = 'varshithyadav'
+        PROJECT_ID = "gke-demo-455116"  
+        CLUSTER_NAME = "gke-demo"   
+        REGION = "us-central1-c"
     }
-
     stages{
         stage("git checkout"){
             steps{
@@ -40,9 +39,22 @@ pipeline{
                 }
             }
         }
-        stage("deploy"){
+        stage("Deploy To GKE"){
             steps{
-                echo "running stage"
+                script{
+                    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+                        sh '''
+                        gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
+                        gcloud config set project $PROJECT_ID
+                        gcloud container clusters get-credentials $CLUSTER_NAME --region $REGION
+                        '''
+                    }
+
+                    sh '''
+                    kubectl apply -f k8s-Deployment.yml
+                    kubectl apply -f k8s-service.yml
+                    '''
+                }
             }
         }
     }
