@@ -1,9 +1,9 @@
 pipeline{
-    agent{
-        label "node"
-    }
+
+    agent any
+
     stages{
-        stage("A"){
+        stage("build"){
             steps{
                 echo "========executing A========"
             }
