@@ -3,8 +3,8 @@ pipeline{
     agent any 
 
     environment{
-        IMAGE_NAME = 'bookStore-api'
-        DOCKER_REGISTRY = 'varshithyadav'
+        DOCKER_IMAGE = 'varshithyadav/bookStore-api:latest'
+        // DOCKER_REGISTRY = 'varshithyadav'
     }
 
     stages{
@@ -17,7 +17,7 @@ pipeline{
             steps{
                 script{
                     sh """
-                        docker build -t ${DOCKER_REGISTRY}/{IMAGE_NAME}:latest .
+                        docker build -t $DOCKER_IMAGE .
                     """
                     echo "builed succefully !"
                 }
