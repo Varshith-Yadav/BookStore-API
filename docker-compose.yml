@@ -1,2 +1,13 @@
 # compose file
 
+services:
+  web:
+    build: .
+    ports:
+      - 8000
+  image:
+    image: "hello"    
+
+
+# this how the compose file we write 
+
